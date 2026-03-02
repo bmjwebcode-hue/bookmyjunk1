@@ -36,9 +36,9 @@ const Navbar = () => {
           <a href="#book" className="border border-primary/60 text-primary px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/5 transition-colors duration-200">
             Book Pickup
           </a>
-          <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors duration-200 flex items-center gap-1.5 shadow-sm shadow-primary/20">
+          {/*<a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors duration-200 flex items-center gap-1.5 shadow-sm shadow-primary/20">
             <Download className="h-4 w-4" /> Get App
-          </a>
+          </a>*/}
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden text-foreground" aria-label="Toggle menu">
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
