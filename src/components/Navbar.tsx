@@ -90,7 +90,7 @@ const Navbar = () => {
                 }}
                 className="block mt-2 bg-primary text-primary-foreground text-center px-5 py-2.5 rounded-lg text-sm font-semibold"
               >
-                📲 Download App
+                📲<download></download> Download App
               </a>
             </div>
           </motion.div>
