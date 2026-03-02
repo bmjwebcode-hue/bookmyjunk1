@@ -77,8 +77,8 @@ const Navbar = () => {
                   const ios = /iPad|iPhone|iPod/.test(userAgent) || 
                     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
                   const android = /android/i.test(userAgent);
-                  const iosStore = "https://apps.apple.com/app/apple-store/idYOUR_APP_ID";
-                  const androidStore = "https://play.google.com/store/apps/details?id=YOUR_APP_PACKAGE";
+                  const iosStore = "https://apps.apple.com/in/app/bookmyjunk/id1595834562";
+                  const androidStore = "https://play.google.com/store/apps/details?id=com.bmj.bookmyjunk&pcampaignid=web_share";
                   if (ios) {
                     window.open(iosStore, "_blank", "noopener,noreferrer");
                   } else if (android) {
