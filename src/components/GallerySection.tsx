@@ -18,22 +18,22 @@ import BMJ_4 from "@/assets/Book-my-junk-ewaste-collection-van.webp";
  */
 const galleryImages = [
   {
-    src: BMJ_1,
+    src: "https://images.unsplash.com/photo-1624823183493-ed5832f48f18?w=800&q=80",
     alt: "E-waste collection drive",
     caption: "Community E-Waste Collection Drive",
   },
   {
-    src: BMJ_2,
+    src: "https://images.unsplash.com/photo-1624823183493-ed5832f48f18?w=800&q=80",
     alt: "Recycling facility",
     caption: "Our State-of-the-Art Recycling Facility",
   },
   {
-    src: BMJ_3,
+    src: "https://images.unsplash.com/photo-1624823183493-ed5832f48f18?w=800&q=80",
     alt: "Electronic waste sorting",
     caption: "Certified E-Waste Sorting Process",
   },
   {
-    src: BMJ_4,
+    src: "https://images.unsplash.com/photo-1624823183493-ed5832f48f18?w=800&q=80",
     alt: "Old electronics recycling",
     caption: "Giving Old Electronics a New Life",
   },
