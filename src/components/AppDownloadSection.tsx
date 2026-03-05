@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Download, Smartphone, CheckCircle2, Star } from "lucide-react";
+import appScreenshot from "@/assets/BMJ APP 2.webp";
 
 const benefits = [
   "Schedule pickup in 30 seconds",
