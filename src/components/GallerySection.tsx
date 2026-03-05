@@ -17,22 +17,22 @@ import BMJ_4 from "@/assets/Book-my-junk-ewaste-collection-van.webp";
  */
 const galleryImages = [
   {
-    img src: {BMJ_1},
+    img src= {BMJ_1},
     alt: "E-waste collection drive",
     caption: "Community E-Waste Collection Drive",
   },
   {
-    img src: {BMJ_2},
+    img src= {BMJ_2},
     alt: "Recycling facility",
     caption: "Our State-of-the-Art Recycling Facility",
   },
   {
-    img src: {BMJ_3},
+    img src= {BMJ_3},
     alt: "Electronic waste sorting",
     caption: "Certified E-Waste Sorting Process",
   },
   {
-    img src: {BMJ_4},
+    img src= {BMJ_4},
     alt: "Old electronics recycling",
     caption: "Giving Old Electronics a New Life",
   },
