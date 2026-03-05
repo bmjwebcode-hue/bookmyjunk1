@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Download } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "@/assets/BMJ Logo.jpg";
+import logoTBG from "@/assets/BMJ_LOGO_TBG.webp";
 
 const links = [
   { label: "About", href: "#about" },
