@@ -74,7 +74,7 @@ const CategoriesSection = () => {
           transition={{ duration: 0.6, delay: 0.5, ease }}
           className="text-center mt-10 text-muted-foreground text-sm"
         >
-          Don't see your item? Contact us on connectwithus@bookmyjunk.com — we accept almost everything electronic.
+          Don't see your item? Contact us on +91 8976769851  or <a href="mailto:connectwithus@bookmyjunk.com" className="hover:underline">connectwithus@bookmyjunk.com </a> — we accept almost everything electronic.
            
         </motion.p>
       </div>
