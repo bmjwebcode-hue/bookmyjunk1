@@ -6,6 +6,10 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import BMJ_1 from "@/assets/Book-my-junk-ewaste-collection.webp";
+import BMJ_2 from "@/assets/Book-my-junk-electronic-waste-van.webp";
+import BMJ_3 from "@/assets/Book-my-junk-ewaste-collection-staff.webp";
+import BMJ_4 from "@/assets/Book-my-junk-ewaste-collection-van.webp";
 
 
 /**
@@ -14,22 +18,22 @@ import {
  */
 const galleryImages = [
   {
-    src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    src: BMJ_1,
     alt: "E-waste collection drive",
     caption: "Community E-Waste Collection Drive",
   },
   {
-    src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    src: BMJ_2,
     alt: "Recycling facility",
     caption: "Our State-of-the-Art Recycling Facility",
   },
   {
-    src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    src: BMJ_3,
     alt: "Electronic waste sorting",
     caption: "Certified E-Waste Sorting Process",
   },
   {
-    src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    src: BMJ_4,
     alt: "Old electronics recycling",
     caption: "Giving Old Electronics a New Life",
   },
