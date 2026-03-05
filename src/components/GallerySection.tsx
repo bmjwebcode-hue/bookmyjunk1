@@ -7,9 +7,9 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import BMJ_1 from "@/assets/Book-my-junk-ewaste-collection.webp";
-import BMJ_2 from "@/assets/Book-my-junk-electronic-waste-van.webp";
-import BMJ_3 from "@/assets/Book-my-junk-ewaste-collection-staff.webp";
-import BMJ_4 from "@/assets/Book-my-junk-ewaste-collection-van.webp";
+import BMJ_2 from "@/assets/book-my-junk-electronic-waste-van.webp";
+import BMJ_3 from "@/assets/book-my-junk-ewaste-collection-staff.webp";
+import BMJ_4 from "@/assets/book-my-junk-ewaste-collection-van.webp";
 
 
 /**
