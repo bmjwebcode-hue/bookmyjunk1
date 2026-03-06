@@ -29,7 +29,54 @@ const BookingForm = () => {
     const body = encodeURIComponent(
       `Name: ${form.name}\nPhone: ${form.phone}\nLocation: ${form.location}\nItems: ${form.items.join(", ")}\nQuantity: ${form.quantity}\nNotes: ${form.notes || "N/A"}`
     );
-    window.open(`mailto:connectwithus@bookmyjunk.com?subject=${subject}&body=${body}`, "_self");
+    const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!form.name.trim() || !form.phone.trim() || !form.location.trim() || form.items.length === 0 || !form.quantity.trim()) {
+    toast.error("Please fill in all required fields");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(form.phone.trim())) {
+    toast.error("Please enter a valid 10-digit phone number");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://bmj5.jambologos.com/booking", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fullname: form.name,
+        phone: form.phone,
+        city: form.location,
+        items: form.items.join(", "),
+        quantity: form.quantity,
+        notes: form.notes
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error("Server error");
+    }
+
+    toast.success("Pickup request submitted! We'll contact you soon.");
+
+    setForm({
+      name: "",
+      phone: "",
+      location: "",
+      items: [],
+      quantity: "",
+      notes: ""
+    });
+
+  } catch (error) {
+    toast.error("Something went wrong. Please try again.");
+  }
+};
     toast.success("Pickup request submitted! We'll contact you within 24 hours.");
     setForm({ name: "", phone: "", location: "", items: [], quantity: "", notes: "" });
   };
