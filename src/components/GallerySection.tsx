@@ -12,16 +12,26 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import BMJ_1 from "@/assets/Book-my-junk-ewaste-collection.webp";
-import BMJ_2 from "@/assets/book-my-junk-electronic-waste-van.webp";
-import BMJ_3 from "@/assets/book-my-junk-ewaste-collection-staff.webp";
+import BMJ_1 from "@/assets/best-e-waste-recycler-in-mumbai.webp";
+import BMJ_2 from "@/assets/e-waste-management-solutions.webp";
+import BMJ_3 from "@/assets/e-waste-collection-centre-near-me.webp";
 import BMJ_4 from "@/assets/book-my-junk-ewaste-collection-van.webp";
+import BMJ_5 from "@/assets/book-my-junk-ewaste-collection-awareness-schools.webp";
+import BMJ_6 from "@/assets/eco-friendly-e-waste-disposal.webp";
+import BMJ_7 from "@/assets/free-e-waste-pickup-service.webp";
+import BMJ_8 from "@/assets/electronic-scrap-recycling-service.webp";
+import BMJ_9 from "@/assets/electronic-waste-pickup-service.webp";
 
 const galleryImages = [
-  { src: BMJ_1, alt: "E-waste collection drive", caption: "Community E-Waste Collection Drive" },
-  { src: BMJ_2, alt: "Electronic waste van", caption: "Our Fleet Ready for Pickup" },
-  { src: BMJ_3, alt: "E-waste collection staff", caption: "Our Dedicated Pickup Team" },
-  { src: BMJ_4, alt: "E-waste collection van", caption: "Certified E-Waste Collection" },
+  { src: BMJ_1, alt: "Best E-waste Recycler", caption: "Community E-Waste Collection Team" },
+  { src: BMJ_2, alt: "E-waste Management", caption: "Certified E-Waste Collection" },
+  { src: BMJ_3, alt: "Electronic waste collection drive", caption: "Collection Drive" },
+  { src: BMJ_4, alt: "E-waste collection van", caption: "Our Fleet Ready for Pickup" },
+  { src: BMJ_5, alt: "E-waste Awareness Drive in schools", caption: "Awareness Drive in schools" },
+  { src: BMJ_6, alt: "Book My Junk e-waste promotion", caption: "Book my junk promotion" },
+  { src: BMJ_7, alt: "Free e-waste pickup service", caption: "Free Collection of E-waste at Doorstep" },
+  { src: BMJ_8, alt: "Book my junk team at promotion", caption: "Book My Junk Team at a promotion" },
+  { src: BMJ_9, alt: "Electronic waste pick up services", caption: "Our Fleet of Vans in Action" },
 ];
 
 const GallerySection = () => {
