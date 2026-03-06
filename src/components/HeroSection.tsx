@@ -21,7 +21,7 @@ const HeroSection = () =>
     fetchPriority="high" />
   
     <div className="absolute inset-0 hero-overlay" />
-    <div className="relative z-10 container mx-auto py-32 text-center px-[5px]">
+    <div className="relative z-10 container mx-auto py-32 text-center px-[16px]">
       <motion.div variants={stagger} initial="hidden" animate="visible">
         <motion.span
         variants={fadeUp()}
@@ -55,12 +55,12 @@ const HeroSection = () =>
             <Smartphone className="h-5 w-5" /> Book Free Pickup
           </motion.a>
           {/*<motion.a
-           href="#book"
-           whileHover={{ scale: 1.04, y: -2 }}
-           whileTap={{ scale: 0.97 }}
-           className="border-2 border-primary-foreground/25 text-primary-foreground px-8 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm hover:bg-primary-foreground/10 transition-colors flex items-center justify-center gap-3"
+          href="#book"
+          whileHover={{ scale: 1.04, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          className="border-2 border-primary-foreground/25 text-primary-foreground px-8 py-4 rounded-xl text-lg font-semibold backdrop-blur-sm hover:bg-primary-foreground/10 transition-colors flex items-center justify-center gap-3"
           >
-           <Download className="h-5 w-5" /> Book Free Pickup
+          <Download className="h-5 w-5" /> Book Free Pickup
           </motion.a>*/}
         </motion.div>
 
