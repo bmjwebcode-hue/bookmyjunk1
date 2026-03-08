@@ -13,7 +13,7 @@ const ewasteItems = [
 const inputCls = "w-full rounded-xl border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary transition-all duration-200";
 
 const BookingForm = () => {
-  const [form, setForm] = useState({ name: "", phone: "", location: "", items: [] as string[], quantity: "", notes: "" });
+  const [form, setForm] = useState({ name: "", phone: "", location: "", items: [] as string[], otherText: "", quantity: "", notes: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,8 +26,9 @@ const BookingForm = () => {
       return;
     }
     const subject = encodeURIComponent("New E-Waste Pickup Request");
+    const itemsText = form.items.join(", ") + (form.items.includes("Other Electronics") && form.otherText ? ` (${form.otherText})` : "");
     const body = encodeURIComponent(
-      `Name: ${form.name}\nPhone: ${form.phone}\nLocation: ${form.location}\nItems: ${form.items.join(", ")}\nQuantity: ${form.quantity}\nNotes: ${form.notes || "N/A"}`
+      `Name: ${form.name}\nPhone: ${form.phone}\nLocation: ${form.location}\nItems: ${itemsText}\nQuantity: ${form.quantity}\nNotes: ${form.notes || "N/A"}`
     );
     const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -52,7 +53,7 @@ const BookingForm = () => {
         fullname: form.name,
         phone: form.phone,
         city: form.location,
-        items: form.items.join(", "),
+        items: form.items.join(", ") + (form.items.includes("Other Electronics") && form.otherText ? ` (${form.otherText})` : ""),
         quantity: form.quantity,
         notes: form.notes
       })
@@ -64,21 +65,14 @@ const BookingForm = () => {
 
     toast.success("Pickup request submitted! We'll contact you soon.");
 
-    setForm({
-      name: "",
-      phone: "",
-      location: "",
-      items: [],
-      quantity: "",
-      notes: ""
-    });
+    setForm({ name: "", phone: "", location: "", items: [], otherText: "", quantity: "", notes: "" });
 
   } catch (error) {
     toast.error("Something went wrong. Please try again.");
   }
 };
     toast.success("Pickup request submitted! We'll contact you within 24 hours.");
-    setForm({ name: "", phone: "", location: "", items: [], quantity: "", notes: "" });
+    setForm({ name: "", phone: "", location: "", items: [], otherText: "", quantity: "", notes: "" });
   };
 
   const toggleItem = (item: string) => {
@@ -155,6 +149,16 @@ const BookingForm = () => {
                 </button>
               ))}
             </div>
+            {form.items.includes("Other Electronics") && (
+              <input
+                type="text"
+                value={form.otherText}
+                onChange={(e) => setForm({ ...form, otherText: e.target.value })}
+                placeholder="Please specify your electronics..."
+                maxLength={200}
+                className={`${inputCls} mt-3`}
+              />
+            )}
           </div>
 
           <div className="mb-5">
