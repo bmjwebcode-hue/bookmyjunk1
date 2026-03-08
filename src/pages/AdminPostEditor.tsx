@@ -55,6 +55,32 @@ const AdminPostEditor = () => {
     }));
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const API_BASE = import.meta.env.VITE_API_URL || "";
+    if (!API_BASE) {
+      // No backend — use object URL as preview
+      setForm((f) => ({ ...f, image: URL.createObjectURL(file) }));
+      return;
+    }
+    setUploading(true);
+    const fd = new FormData();
+    fd.append("image", file);
+    try {
+      const res = await fetch(`${API_BASE}/api/admin/upload`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("admin_token")}` },
+        body: fd,
+      });
+      const data = await res.json();
+      if (data.url) setForm((f) => ({ ...f, image: data.url }));
+    } catch (err) {
+      console.error("Upload failed", err);
+    }
+    setUploading(false);
+  };
+
   const handleSave = async () => {
     setSaving(true);
     const API_BASE = import.meta.env.VITE_API_URL || "";
