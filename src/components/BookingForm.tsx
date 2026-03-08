@@ -13,7 +13,7 @@ const ewasteItems = [
 const inputCls = "w-full rounded-xl border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary transition-all duration-200";
 
 const BookingForm = () => {
-  const [form, setForm] = useState({ name: "", phone: "", location: "", items: [] as string[], quantity: "", notes: "" });
+  const [form, setForm] = useState({ name: "", phone: "", location: "", items: [] as string[], otherText: "", quantity: "", notes: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
