@@ -30,16 +30,17 @@ const ImageCarousel = () => {
   }, []);
 
   const total = images.length;
+  const maxIndex = Math.max(0, total - 3); // desktop shows 3 at a time
 
   const goNext = useCallback(() => {
     if (total === 0) return;
-    setCurrent((p) => (p + 1) % total);
-  }, [total]);
+    setCurrent((p) => (p >= maxIndex ? 0 : p + 1));
+  }, [total, maxIndex]);
 
   const goPrev = useCallback(() => {
     if (total === 0) return;
-    setCurrent((p) => (p - 1 + total) % total);
-  }, [total]);
+    setCurrent((p) => (p <= 0 ? maxIndex : p - 1));
+  }, [total, maxIndex]);
 
   // Autoplay
   useEffect(() => {
