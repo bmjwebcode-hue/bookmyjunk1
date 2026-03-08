@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   seo_description TEXT DEFAULT NULL,
   seo_keywords TEXT DEFAULT NULL,
   featured_homepage BOOLEAN DEFAULT FALSE,
+  views INT DEFAULT 0,
   seo_description TEXT DEFAULT NULL,
   seo_keywords TEXT DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

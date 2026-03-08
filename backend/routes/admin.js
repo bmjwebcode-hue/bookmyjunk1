@@ -42,12 +42,15 @@ function invalidateCaches(req) {
   if (req.app.locals.sitemapCache) {
     req.app.locals.sitemapCache.del("sitemap");
   }
-  // Invalidate blog caches
   const blogRoutes = require("./blog");
   if (blogRoutes.blogCache) {
     blogRoutes.blogCache.flushAll();
-    console.log("[Cache] Blog caches invalidated");
   }
+  try {
+    const analyticsRoutes = require("./analytics");
+    if (analyticsRoutes.analyticsCache) analyticsRoutes.analyticsCache.flushAll();
+  } catch {}
+  console.log("[Cache] All caches invalidated");
 }
 
 // ==================== AUTH ====================
