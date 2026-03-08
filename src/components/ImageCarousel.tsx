@@ -17,6 +17,7 @@ const ease = [0.25, 0.46, 0.45, 0.94] as const;
 const ImageCarousel = () => {
   const [images, setImages] = useState<CarouselImage[]>([]);
   const [page, setPage] = useState(0);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
