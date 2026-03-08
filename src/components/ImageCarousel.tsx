@@ -17,6 +17,7 @@ const ease = [0.25, 0.46, 0.45, 0.94] as const;
 const ImageCarousel = () => {
   const [images, setImages] = useState<CarouselImage[]>([]);
   const [page, setPage] = useState(0);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = backward
   const [modalOpen, setModalOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -33,11 +34,13 @@ const ImageCarousel = () => {
 
   const goNext = useCallback(() => {
     if (totalPages === 0) return;
+    setDirection(1);
     setPage((p) => (p + 1) % totalPages);
   }, [totalPages]);
 
   const goPrev = useCallback(() => {
     if (totalPages === 0) return;
+    setDirection(-1);
     setPage((p) => (p - 1 + totalPages) % totalPages);
   }, [totalPages]);
 
@@ -122,10 +125,10 @@ const ImageCarousel = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={page}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.45, ease }}
+              initial={{ opacity: 0, x: direction * 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction * -80 }}
+              transition={{ duration: 0.4, ease }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
             >
               {visible.map((img, i) => {
