@@ -10,6 +10,9 @@ export interface BlogPost {
   status?: string;
   publish_date?: string;
   created_at?: string;
+  seo_title?: string;
+  seo_description?: string;
+  seo_keywords?: string;
 }
 
 const API_BASE = import.meta.env.VITE_API_URL || "";

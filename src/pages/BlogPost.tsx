@@ -5,6 +5,7 @@ import { Calendar, ArrowLeft, User } from "lucide-react";
 import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BlogSEO from "@/components/BlogSEO";
 import { getPostBySlug, type BlogPost as BlogPostType } from "@/lib/blog-api";
 
 const BlogPost = () => {
@@ -60,6 +61,7 @@ const BlogPost = () => {
   return (
     <>
       <Navbar />
+      <BlogSEO post={post} />
       <main className="pt-28 pb-24 bg-background min-h-screen">
         <article className="container mx-auto px-4 max-w-3xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

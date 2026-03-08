@@ -20,6 +20,9 @@ const AdminPostEditor = () => {
     content: "",
     author: localStorage.getItem("admin_email") || "Admin",
     status: "draft",
+    seo_title: "",
+    seo_description: "",
+    seo_keywords: "",
   });
 
   useEffect(() => {
@@ -38,6 +41,9 @@ const AdminPostEditor = () => {
             content: post.content,
             author: post.author,
             status: post.status || "draft",
+            seo_title: post.seo_title || "",
+            seo_description: post.seo_description || "",
+            seo_keywords: post.seo_keywords || "",
           });
         }
       });
@@ -227,6 +233,43 @@ const AdminPostEditor = () => {
                     <option value="draft">Draft</option>
                     <option value="published">Published</option>
                   </select>
+                </div>
+              </div>
+
+              {/* SEO Section */}
+              <div className="border-t border-border pt-5 mt-2">
+                <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">SEO Settings <span className="text-muted-foreground font-normal normal-case tracking-normal">(optional — auto-generated if empty)</span></h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">SEO Title</label>
+                    <input
+                      type="text"
+                      value={form.seo_title}
+                      onChange={(e) => setForm((f) => ({ ...f, seo_title: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder={form.title || "Auto-generated from title"}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">SEO Description</label>
+                    <textarea
+                      value={form.seo_description}
+                      onChange={(e) => setForm((f) => ({ ...f, seo_description: e.target.value }))}
+                      rows={2}
+                      className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                      placeholder={form.excerpt || "Auto-generated from excerpt"}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">SEO Keywords</label>
+                    <input
+                      type="text"
+                      value={form.seo_keywords}
+                      onChange={(e) => setForm((f) => ({ ...f, seo_keywords: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="e-waste, recycling, electronic waste disposal"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
