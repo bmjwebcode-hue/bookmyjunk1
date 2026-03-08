@@ -122,13 +122,19 @@ const ImageCarousel = () => {
             </>
           )}
 
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="popLayout" custom={direction}>
             <motion.div
               key={page}
-              initial={{ opacity: 0, x: direction * 80 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction * -80 }}
-              transition={{ duration: 0.4, ease }}
+              custom={direction}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              variants={{
+                enter: (dir: number) => ({ opacity: 0, x: dir * 120, scale: 0.97 }),
+                center: { opacity: 1, x: 0, scale: 1 },
+                exit: (dir: number) => ({ opacity: 0, x: dir * -120, scale: 0.97 }),
+              }}
+              transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
             >
               {visible.map((img, i) => {
@@ -136,11 +142,10 @@ const ImageCarousel = () => {
                 return (
                   <motion.div
                     key={img.id}
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.08, ease }}
-                    whileHover={{ y: -6 }}
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, delay: i * 0.1, ease: [0.32, 0.72, 0, 1] }}
+                    whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
                     className="group relative rounded-2xl border border-border bg-card overflow-hidden cursor-pointer transition-shadow duration-300"
                     style={{
                       boxShadow: "var(--card-shadow)",
