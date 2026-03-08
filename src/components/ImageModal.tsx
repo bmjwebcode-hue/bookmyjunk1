@@ -55,7 +55,7 @@ const ImageModal = ({ images, currentIndex, isOpen, onClose, onNavigate }: Image
           onClick={onClose}
         >
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/90" />
 
           {/* Close button */}
           <button
