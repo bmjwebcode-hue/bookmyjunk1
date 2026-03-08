@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, ArrowLeft, User } from "lucide-react";
+import { Calendar, ArrowLeft, User, Clock } from "lucide-react";
 import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -63,55 +63,91 @@ const BlogPost = () => {
     );
   }
 
+  const readingTime = Math.max(1, Math.round(post.content.replace(/<[^>]*>/g, "").split(/\s+/).length / 220));
+
   return (
     <>
       <Navbar />
       <BlogSEO post={post} />
-      <main className="pt-28 pb-24 bg-background min-h-screen">
-        <article className="container mx-auto px-4 max-w-3xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+
+      {/* Hero image — full-bleed */}
+      <div className="pt-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative w-full h-[320px] md:h-[420px] overflow-hidden bg-muted"
+        >
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        </motion.div>
+      </div>
+
+      <main className="pb-24 bg-background min-h-screen">
+        <article className="container mx-auto px-4 max-w-3xl -mt-24 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <Link
               to="/blog"
-              className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground text-sm mb-6 transition-colors"
+              className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground text-sm mb-6 transition-colors group"
             >
-              <ArrowLeft className="h-4 w-4" /> Back to Blog
+              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" /> Back to Blog
             </Link>
 
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground leading-tight">
-              {post.title}
-            </h1>
+            {/* Title card */}
+            <div className="bg-card rounded-2xl border border-border p-8 md:p-10 card-elevated mb-10">
+              <h1 className="text-3xl md:text-[2.5rem] font-display font-bold text-foreground leading-[1.2] tracking-tight">
+                {post.title}
+              </h1>
 
-            <div className="flex items-center gap-4 mt-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <User className="h-4 w-4" /> {post.author}
-              </span>
-              {post.publish_date && (
-                <span className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  {new Date(post.publish_date).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <User className="h-4 w-4 text-primary/60" /> {post.author}
                 </span>
+                {post.publish_date && (
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="h-4 w-4 text-primary/60" />
+                    {new Date(post.publish_date).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                )}
+                <span className="flex items-center gap-1.5">
+                  <Clock className="h-4 w-4 text-primary/60" /> {readingTime} min read
+                </span>
+              </div>
+
+              {post.excerpt && (
+                <p className="mt-5 text-muted-foreground text-[1.05rem] leading-relaxed border-l-4 border-primary/30 pl-5 italic">
+                  {post.excerpt}
+                </p>
               )}
             </div>
 
-            <div className="mt-8 rounded-2xl overflow-hidden">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-auto max-h-[400px] object-cover"
-              />
-            </div>
-
+            {/* Article body */}
             <div
-              className="mt-10 prose prose-green max-w-none text-foreground
-                prose-headings:font-display prose-headings:text-foreground
-                prose-p:text-muted-foreground prose-p:leading-relaxed
-                prose-a:text-primary prose-strong:text-foreground"
+              className="blog-prose"
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             />
+
+            {/* Bottom nav */}
+            <div className="mt-16 pt-8 border-t border-border flex justify-between items-center">
+              <Link
+                to="/blog"
+                className="inline-flex items-center gap-1.5 text-primary font-medium text-sm hover:gap-2.5 transition-all group"
+              >
+                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" /> All Articles
+              </Link>
+            </div>
           </motion.div>
         </article>
       </main>

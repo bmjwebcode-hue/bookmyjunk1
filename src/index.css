@@ -126,4 +126,74 @@
     content: "";
     @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-px bg-border;
   }
+
+  /* Blog article prose */
+  .blog-prose {
+    @apply text-base leading-[1.85] text-muted-foreground;
+  }
+  .blog-prose h2 {
+    @apply font-display text-2xl font-bold text-foreground mt-12 mb-4 pb-2 border-b border-border;
+  }
+  .blog-prose h3 {
+    @apply font-display text-xl font-semibold text-foreground mt-10 mb-3;
+  }
+  .blog-prose h4 {
+    @apply font-display text-lg font-semibold text-foreground mt-8 mb-2;
+  }
+  .blog-prose p {
+    @apply mb-6 leading-[1.85];
+  }
+  .blog-prose a {
+    @apply text-primary font-medium underline underline-offset-2 decoration-primary/30 hover:decoration-primary transition-colors;
+  }
+  .blog-prose strong, .blog-prose b {
+    @apply text-foreground font-semibold;
+  }
+  .blog-prose ul {
+    @apply mb-6 pl-0 space-y-2;
+  }
+  .blog-prose ol {
+    @apply mb-6 pl-0 space-y-2 list-none counter-reset-[item];
+  }
+  .blog-prose li {
+    @apply relative pl-7 text-muted-foreground;
+  }
+  .blog-prose ul li::before {
+    content: "";
+    @apply absolute left-1.5 top-[0.65rem] w-2 h-2 rounded-full bg-primary/50;
+  }
+  .blog-prose ol li {
+    counter-increment: item;
+  }
+  .blog-prose ol li::before {
+    content: counter(item);
+    @apply absolute left-0 top-0 w-5 h-5 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center;
+  }
+  .blog-prose blockquote {
+    @apply my-8 pl-6 border-l-4 border-primary/40 italic text-foreground/80 bg-accent/30 py-4 pr-6 rounded-r-xl;
+  }
+  .blog-prose img {
+    @apply my-8 rounded-xl w-full shadow-md;
+  }
+  .blog-prose pre {
+    @apply my-6 p-5 rounded-xl bg-muted text-sm font-mono overflow-x-auto border border-border;
+  }
+  .blog-prose code {
+    @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground;
+  }
+  .blog-prose pre code {
+    @apply bg-transparent p-0;
+  }
+  .blog-prose hr {
+    @apply my-10 border-border;
+  }
+  .blog-prose table {
+    @apply w-full my-6 text-sm border-collapse;
+  }
+  .blog-prose th {
+    @apply bg-muted px-4 py-2.5 text-left font-semibold text-foreground border border-border;
+  }
+  .blog-prose td {
+    @apply px-4 py-2.5 border border-border;
+  }
 }
