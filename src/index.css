@@ -153,7 +153,8 @@
     @apply mb-6 pl-0 space-y-2;
   }
   .blog-prose ol {
-    @apply mb-6 pl-0 space-y-2 list-none counter-reset-[item];
+    @apply mb-6 pl-0 space-y-2 list-none;
+    counter-reset: item;
   }
   .blog-prose li {
     @apply relative pl-7 text-muted-foreground;
