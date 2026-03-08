@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Save, Eye } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload, Loader2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { getPostBySlug, type BlogPost } from "@/lib/blog-api";
 
