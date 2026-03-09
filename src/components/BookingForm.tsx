@@ -15,21 +15,6 @@ const inputCls = "w-full rounded-xl border border-input bg-background px-4 py-3.
 const BookingForm = () => {
   const [form, setForm] = useState({ name: "", phone: "", location: "", items: [] as string[], otherText: "", quantity: "", notes: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim() || !form.location.trim() || form.items.length === 0 || !form.quantity.trim()) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-    if (!/^\d{10}$/.test(form.phone.trim())) {
-      toast.error("Please enter a valid 10-digit phone number");
-      return;
-    }
-    const subject = encodeURIComponent("New E-Waste Pickup Request");
-    const itemsText = form.items.join(", ") + (form.items.includes("Other Electronics") && form.otherText ? ` (${form.otherText})` : "");
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nPhone: ${form.phone}\nLocation: ${form.location}\nItems: ${itemsText}\nQuantity: ${form.quantity}\nNotes: ${form.notes || "N/A"}`
-    );
     const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
