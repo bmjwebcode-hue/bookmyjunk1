@@ -75,7 +75,7 @@ const Navbar = () => {
                     {l.label}
                   </Link>
                 ) : (
-                  <a key={l.label} href={getHref(l.href)} onClick={() => setOpen(false)} className="block py-2.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a key={l.label} href={getHref(l.href)} onClick={(e) => { handleHashClick(e, l.href); setOpen(false); }} className="block py-2.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {l.label}
                   </a>
                 )
