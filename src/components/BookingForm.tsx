@@ -44,16 +44,17 @@ const BookingForm = () => {
   }
 
   try {
-    const res = await fetch("https://bmj5.jambologos.com/booking", {
+    const res = await fetch("https://api.jambologos.com/api/booking", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        fullname: form.name,
+        name: form.name,
         phone: form.phone,
-        city: form.location,
-        items: form.items.join(", ") + (form.items.includes("Other Electronics") && form.otherText ? ` (${form.otherText})` : ""),
+        location: form.location,
+        items: form.items,
+        otherElectronics: form.otherText,
         quantity: form.quantity,
         notes: form.notes
       })
