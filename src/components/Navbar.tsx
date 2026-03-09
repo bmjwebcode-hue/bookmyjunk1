@@ -19,10 +19,15 @@ const Navbar = () => {
   const isHome = location.pathname === "/";
 
   const handleHashClick = (e: React.MouseEvent, href: string) => {
-    if (!isHome) {
-      e.preventDefault();
-      navigate("/" + href);
-    }
+    if (isHome) return; // let default anchor behavior work
+    e.preventDefault();
+    // Navigate to home, then scroll to section after page loads
+    navigate("/");
+    setTimeout(() => {
+      const id = href.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 300);
   };
 
   const getHref = (href: string) => {
