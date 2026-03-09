@@ -43,7 +43,7 @@ const Navbar = () => {
                 {l.label}
               </Link>
             ) : (
-              <a key={l.label} href={getHref(l.href)} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200">
+              <a key={l.label} href={getHref(l.href)} onClick={(e) => handleHashClick(e, l.href)} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200">
                 {l.label}
               </a>
             )
