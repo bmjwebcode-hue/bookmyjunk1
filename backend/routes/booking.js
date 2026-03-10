@@ -3,7 +3,7 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const db = require("../db");
 
-const OWNER_EMAILS = ["epr@ecoreco.com", "info@ecoreco.com"];
+const OWNER_EMAILS = ["epr@ecoreco.com", "connectwithus@bookmyjunk.com", "chahna@ecoreco.com"];
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || "smtp.gmail.com",
