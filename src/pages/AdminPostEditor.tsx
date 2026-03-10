@@ -56,11 +56,9 @@ const AdminPostEditor = () => {
     seo_keywords: "",
   });
 
-  /* keep form.content in sync with editor */
+  /* Sync editor HTML into form — only on blur/save, NOT on every keystroke */
   const syncContent = useCallback(() => {
-    if (editorRef.current) {
-      setForm((f) => ({ ...f, content: editorRef.current!.innerHTML }));
-    }
+    // intentionally no-op on input; we read innerHTML directly when needed
   }, []);
 
   useEffect(() => {
