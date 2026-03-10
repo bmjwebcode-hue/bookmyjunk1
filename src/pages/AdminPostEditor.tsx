@@ -126,30 +126,25 @@ const AdminPostEditor = () => {
     if (!API_BASE) {
       imageUrl = URL.createObjectURL(file);
     } else {
-     setContentUploading(true);
-
-     const fd = new FormData();
-     fd.append("image", file);
-
-     try {
+      setContentUploading(true);
+      const fd = new FormData();
+      fd.append("image", file);
+      try {
         const res = await fetch(`${API_BASE}/api/admin/upload`, {
-        method: "POST",
-        headers: {
-        Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
-    },
-    body: fd,
-  });
-
-  const data = await res.json();
-  imageUrl = `${API_BASE}${data.url}`;
-
-} catch (err) {
-  console.error(err);
-  setContentUploading(false);
-  return;
-}
-
-setContentUploading(false);
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+          },
+          body: fd,
+        });
+        const data = await res.json();
+        imageUrl = `${API_BASE}${data.url}`;
+      } catch (err) {
+        console.error(err);
+        setContentUploading(false);
+        return;
+      }
+      setContentUploading(false);
     }
     if (imageUrl) {
       exec("insertHTML", `<img src="${imageUrl}" alt="Blog image" style="max-width:100%;border-radius:12px;margin:16px 0;" />`);
@@ -184,28 +179,20 @@ setContentUploading(false);
   };
 
   const handleSave = async () => {
-    // sync one last time
     if (editorRef.current) {
-  setForm((f) => ({
-    ...f,
-    content: editorRef.current!.innerHTML
-  }));
-}
-    setSaving(true);
-    //const API_BASE = import.meta.env.VITE_API_URL || "";
-    //if (API_BASE) {
-     const API_BASE = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
-
-      const url = isEdit ? `${API_BASE}/api/admin/posts/${slug}` : `${API_BASE}/api/admin/posts`;
-      await fetch(url, {
-        method: isEdit ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
-        },
-        body: JSON.stringify(form),
-      });
+      setForm((f) => ({ ...f, content: editorRef.current!.innerHTML }));
     }
+    setSaving(true);
+    const API_BASE = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
+    const url = isEdit ? `${API_BASE}/api/admin/posts/${slug}` : `${API_BASE}/api/admin/posts`;
+    await fetch(url, {
+      method: isEdit ? "PUT" : "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+      },
+      body: JSON.stringify(form),
+    });
     setSaving(false);
     navigate("/admin/dashboard");
   };
