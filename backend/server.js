@@ -5,6 +5,7 @@ const NodeCache = require("node-cache");
 const blogRoutes = require("./routes/blog");
 const adminRoutes = require("./routes/admin");
 const analyticsRoutes = require("./routes/analytics");
+const bookingRoutes = require("./routes/booking");
 const db = require("./db");
 
 const app = express();
@@ -25,6 +26,7 @@ app.set("trust proxy", true);
 app.use("/api/blog", blogRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/analytics", analyticsRoutes);
+app.use("/api/booking", bookingRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
