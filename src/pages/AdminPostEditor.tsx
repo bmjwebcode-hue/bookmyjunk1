@@ -179,28 +179,20 @@ const AdminPostEditor = () => {
   };
 
   const handleSave = async () => {
-    // sync one last time
     if (editorRef.current) {
-  setForm((f) => ({
-    ...f,
-    content: editorRef.current!.innerHTML
-  }));
-}
-    setSaving(true);
-    //const API_BASE = import.meta.env.VITE_API_URL || "";
-    //if (API_BASE) {
-     const API_BASE = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
-
-      const url = isEdit ? `${API_BASE}/api/admin/posts/${slug}` : `${API_BASE}/api/admin/posts`;
-      await fetch(url, {
-        method: isEdit ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
-        },
-        body: JSON.stringify(form),
-      });
+      setForm((f) => ({ ...f, content: editorRef.current!.innerHTML }));
     }
+    setSaving(true);
+    const API_BASE = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
+    const url = isEdit ? `${API_BASE}/api/admin/posts/${slug}` : `${API_BASE}/api/admin/posts`;
+    await fetch(url, {
+      method: isEdit ? "PUT" : "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+      },
+      body: JSON.stringify(form),
+    });
     setSaving(false);
     navigate("/admin/dashboard");
   };
