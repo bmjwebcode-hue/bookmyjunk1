@@ -136,7 +136,8 @@ const AdminPostEditor = () => {
           body: fd,
         });
         const data = await res.json();
-        imageUrl = data.url;
+        {// imageUrl = data.url;}
+          imageUrl = `${API_BASE}${data.url}`;
       } catch {
         setContentUploading(false);
         return;
