@@ -136,7 +136,7 @@ const AdminPostEditor = () => {
           body: fd,
         });
         const data = await res.json();
-        {// imageUrl = data.url;}
+        
           imageUrl = `${API_BASE}${data.url}`;
       } catch {
         setContentUploading(false);
@@ -187,8 +187,8 @@ const AdminPostEditor = () => {
     setSaving(true);
     //const API_BASE = import.meta.env.VITE_API_URL || "";
     //if (API_BASE) {
-    const API_BASE = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
-    
+     const API_BASE = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
+
       const url = isEdit ? `${API_BASE}/api/admin/posts/${slug}` : `${API_BASE}/api/admin/posts`;
       await fetch(url, {
         method: isEdit ? "PUT" : "POST",
