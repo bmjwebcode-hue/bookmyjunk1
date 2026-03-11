@@ -60,7 +60,7 @@ const BlogSection = () => {
                 <Link to={`/blog/${post.slug}`}>
                   <div className="h-48 overflow-hidden">
                     <img
-                      src={post.image}
+                      src={resolveImageUrl(post.image)}
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
