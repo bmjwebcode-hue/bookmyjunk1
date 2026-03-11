@@ -4,7 +4,7 @@ import { Calendar, ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getAllPosts, type BlogPost } from "@/lib/blog-api";
+import { getAllPosts, resolveImageUrl, type BlogPost } from "@/lib/blog-api";
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -62,7 +62,7 @@ const Blog = () => {
                   <Link to={`/blog/${post.slug}`}>
                     <div className="h-48 overflow-hidden">
                       <img
-                        src={post.image}
+                        src={resolveImageUrl(post.image)}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
