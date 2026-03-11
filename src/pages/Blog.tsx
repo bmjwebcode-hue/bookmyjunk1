@@ -4,7 +4,7 @@ import { Calendar, ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getAllPosts, type BlogPost } from "@/lib/blog-api";
+import { getAllPosts, resolveImageUrl, type BlogPost } from "@/lib/blog-api";
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
