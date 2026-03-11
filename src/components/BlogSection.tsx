@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, ArrowRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getLatestPosts, type BlogPost } from "@/lib/blog-api";
+import { getLatestPosts, resolveImageUrl, type BlogPost } from "@/lib/blog-api";
 
 const BlogSection = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
