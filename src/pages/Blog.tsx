@@ -11,6 +11,19 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      window.location.replace("/#blog");
+    };
+
+    window.addEventListener("popstate", onPopState, { capture: true });
+    return () => window.removeEventListener("popstate", onPopState, { capture: true });
+  }, []);
+
+  useEffect(() => {
     getAllPosts().then((p) => {
       setPosts(p);
       setLoading(false);
@@ -29,7 +42,7 @@ const Blog = () => {
           >
             <span className="text-primary font-semibold text-sm tracking-widest uppercase">Blog</span>
             <h1 className="mt-3 text-3xl md:text-5xl font-display font-bold text-foreground">
-              E-Waste Insights & Guides
+              E-waste Insights & Guides
             </h1>
             <p className="mt-4 text-muted-foreground text-lg">
               Stay informed about responsible e-waste recycling, eco-friendly disposal tips, and industry news.
@@ -50,25 +63,26 @@ const Blog = () => {
               ))}
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
               {posts.map((post, i) => (
                 <motion.article
                   key={post.slug}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="bg-card rounded-2xl border border-border hover:shadow-lg transition-all group cursor-pointer overflow-hidden"
+                  className="bg-card rounded-2xl border border-border hover:shadow-lg transition-all group cursor-pointer overflow-hidden flex flex-col h-full"
                 >
-                  <Link to={`/blog/${post.slug}`}>
+                  <Link to={`/blog/${post.slug}`} className="flex flex-col h-full">
                     <div className="h-48 overflow-hidden">
                       <img
-                        src={resolveImageUrl(post.image)}
+                        src={resolveImageUrl(post.image) || "/placeholder.svg"}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
+                        onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder.svg"; }}
                       />
                     </div>
-                    <div className="p-6">
+                    <div className="p-6 flex flex-col flex-1">
                       <div className="flex items-center gap-3 mb-3">
                         <span className="text-xs text-muted-foreground flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
@@ -84,7 +98,7 @@ const Blog = () => {
                         {post.title}
                       </h2>
                       <p className="mt-2 text-muted-foreground text-sm leading-relaxed line-clamp-3">{post.excerpt}</p>
-                      <span className="mt-4 inline-flex items-center text-primary text-sm font-medium gap-1 group-hover:gap-2 transition-all">
+                      <span className="mt-auto pt-4 inline-flex items-center text-primary text-sm font-medium gap-1 group-hover:gap-2 transition-all">
                         Read Article <ArrowRight className="h-4 w-4" />
                       </span>
                     </div>

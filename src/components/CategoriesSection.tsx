@@ -39,7 +39,7 @@ const CategoriesSection = () => {
             What We Accept
           </span>
           <h2 className="mt-4 text-3xl md:text-5xl font-display font-bold text-foreground tracking-tight">
-            E-Waste Categories
+            E-waste Categories
           </h2>
           <p className="mt-4 text-muted-foreground text-lg">
             We responsibly recycle all types of electronic waste. Select any item below to schedule a free doorstep pickup.

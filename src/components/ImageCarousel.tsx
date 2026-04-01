@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import ImageModal from "./ImageModal";
+import { setHomeScrollTarget } from "@/lib/scroll-utils";
 
 interface CarouselImage {
   id: number;
@@ -34,14 +36,54 @@ const ImageCarousel = () => {
 
   // Load JSON then preload every image before rendering
   useEffect(() => {
-    fetch("/data/carousel-images.json")
-      .then((r) => r.json())
-      .then(async (data: CarouselImage[]) => {
-        setImages(data);
-        await Promise.all(data.map((d) => preloadImage(d.image)));
+    const base = import.meta.env.VITE_API_URL || "https://api.jambologos.com";
+    const load = async () => {
+      const fallback = async () => {
+        const r = await fetch("/data/carousel-images.json");
+        const data = (await r.json()) as CarouselImage[];
+        const sliced = data.slice(0, 6);
+        setImages(sliced);
+        await Promise.all(sliced.map((d) => preloadImage(d.image)));
         setAllLoaded(true);
-      })
-      .catch(console.error);
+      };
+
+      try {
+        const res = await fetch(`${base}/api/cms/gallery`);
+        if (!res.ok) return await fallback();
+        const data = (await res.json()) as any[];
+        if (!Array.isArray(data) || data.length === 0) return await fallback();
+
+        const featured = data
+          .filter((x: any) => x?.image_url && (x.is_featured === 1 || x.is_featured === true))
+          .slice(0, 6)
+          .map((x: any, i: number) => ({
+            id: x.id ?? i + 1,
+            image: x.image_url,
+            caption: (x.caption || "").trim() || "Gallery image",
+            subtitle: (x.alt_text || "").trim() || "",
+          })) as CarouselImage[];
+
+        const mapped = featured.length
+          ? featured
+          : (data
+              .filter((x: any) => x?.image_url)
+              .slice(0, 6)
+              .map((x: any, i: number) => ({
+                id: x.id ?? i + 1,
+                image: x.image_url,
+                caption: (x.caption || "").trim() || "Gallery image",
+                subtitle: (x.alt_text || "").trim() || "",
+              })) as CarouselImage[]);
+
+        if (!mapped.length) return await fallback();
+        setImages(mapped);
+        await Promise.all(mapped.map((d) => preloadImage(d.image)));
+        setAllLoaded(true);
+      } catch {
+        await fallback();
+      }
+    };
+    void load();
   }, []);
 
   const totalPages = Math.ceil(images.length / ITEMS_PER_PAGE);
@@ -222,6 +264,16 @@ const ImageCarousel = () => {
               ))}
             </div>
           )}
+
+          <div className="text-center mt-12">
+            <Link
+              to="/gallery"
+              onClick={() => setHomeScrollTarget("gallery")}
+              className="inline-flex items-center gap-2 border border-primary/60 text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary/5 transition-colors"
+            >
+              View All Photos <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </div>
 

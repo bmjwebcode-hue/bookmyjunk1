@@ -33,17 +33,21 @@ export interface AnalyticsPost {
 
 const API_BASE = import.meta.env.VITE_API_URL || "";
 
-/** Normalize image URLs — prepend API_BASE if path is relative */
-export function resolveImageUrl(url: string): string {
-  if (!url) return "/placeholder.svg";
-  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:") || url.startsWith("blob:")) {
-    return url;
-  }
-  // Strip any accidental prefix like "bmj7.backend" etc.
-  const cleaned = url.replace(/^[a-zA-Z0-9.-]*backend/, "");
-  const base = API_BASE || "https://api.jambologos.com";
-  return `${base}${cleaned.startsWith("/") ? cleaned : `/${cleaned}`}`;
-}
+export const resolveImageUrl = (url?: string | null): string | null => {
+  if (!url) return null;
+  if (url.startsWith("http") || url.startsWith("data:") || url.startsWith("blob:")) return url;
+  // Strip any broken server path prefixes
+  const cleaned = url.replace(/^.*bmj7\.backend\//, "").replace(/^\/+/, "");
+  return `https://api.jambologos.com/${cleaned}`;
+};
+
+export const fetchAdminPosts = async () => {
+  const token = localStorage.getItem("admin_token");
+  const res = await fetch("https://api.jambologos.com/api/admin/posts", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.ok ? res.json() : [];
+};
 
 async function fetchFromApi<T>(path: string): Promise<T | null> {
   if (!API_BASE) return null;
@@ -116,8 +120,10 @@ export function isTokenValid(): boolean {
   const token = localStorage.getItem("admin_token");
   if (!token || token === "demo_token") return !!token;
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.exp * 1000 > Date.now();
+    const b64Url = token.split(".")[1];
+    const b64 = b64Url.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(b64Url.length / 4) * 4, "=");
+    const payload = JSON.parse(atob(b64));
+    return typeof payload.exp === "number" && payload.exp > Date.now() / 1000;
   } catch {
     return false;
   }

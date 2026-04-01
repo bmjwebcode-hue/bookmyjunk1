@@ -3,11 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Download } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoTBG from "@/assets/BMJ_Logo.webp";
+import { setHomeScrollTarget } from "@/lib/scroll-utils";
 
 const links = [
   { label: "About", href: "#about" },
-  { label: "Services", href: "#categories" },
+  { label: "Categories", href: "#categories" },
   { label: "Videos", href: "#videos" },
+  { label: "Eco Warriors", href: "#eco-warriors" },
+  { label: "Leadership", href: "/founders" },
   { label: "FAQ", href: "#faq" },
   { label: "Blog", href: "#blog" },
 ];
@@ -19,15 +22,26 @@ const Navbar = () => {
   const isHome = location.pathname === "/";
 
   const handleHashClick = (e: React.MouseEvent, href: string) => {
-    if (isHome) return; // let default anchor behavior work
     e.preventDefault();
-    // Navigate to home, then scroll to section after page loads
-    navigate("/");
-    setTimeout(() => {
-      const id = href.replace("#", "");
+    const id = href.replace("#", "");
+    if (isHome) {
+      // Already on home — just scroll directly
       const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 300);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    // Navigate to home then retry scrolling until element is found
+    navigate("/");
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        clearInterval(interval);
+      }
+      attempts++;
+      if (attempts > 20) clearInterval(interval);
+    }, 100);
   };
 
   const getHref = (href: string) => {
@@ -44,7 +58,15 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-7">
           {links.map((l) =>
             l.href.startsWith("/") ? (
-              <Link key={l.label} to={l.href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200">
+              <Link
+                key={l.label}
+                to={l.href}
+                onClick={() => {
+                  // Set sessionStorage for back button navigation to homepage sections
+                  if (l.href === "/founders") setHomeScrollTarget("book");
+                }}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              >
                 {l.label}
               </Link>
             ) : (
@@ -53,7 +75,11 @@ const Navbar = () => {
               </a>
             )
           )}
-          <a href="https://wa.me/+918976769851" target="_blank" rel="noopener noreferrer" className="border border-primary/60 text-primary px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/5 transition-colors duration-200">
+          <a
+            href="/#book"
+            onClick={(e) => handleHashClick(e, "#book")}
+            className="border border-primary/60 text-primary px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/5 transition-colors duration-200"
+          >
             Book Pickup
           </a>
           {/*<a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors duration-200 flex items-center gap-1.5 shadow-sm shadow-primary/20">
@@ -76,7 +102,16 @@ const Navbar = () => {
             <div className="px-4 pb-4 pt-1">
               {links.map((l) =>
                 l.href.startsWith("/") ? (
-                  <Link key={l.label} to={l.href} onClick={() => setOpen(false)} className="block py-2.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link
+                    key={l.label}
+                    to={l.href}
+                    onClick={() => {
+                      setOpen(false);
+                      // Set sessionStorage for back button navigation to homepage sections
+                      if (l.href === "/founders") setHomeScrollTarget("book");
+                    }}
+                    className="block py-2.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     {l.label}
                   </Link>
                 ) : (
@@ -85,7 +120,11 @@ const Navbar = () => {
                   </a>
                 )
               )}
-              <a href= "https://wa.me/+918976769851" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="block mt-2 border border-primary/60 text-primary text-center px-5 py-2.5 rounded-lg text-sm font-semibold">
+              <a
+                href="/#book"
+                onClick={(e) => { handleHashClick(e, "#book"); setOpen(false); }}
+                className="block mt-2 border border-primary/60 text-primary text-center px-5 py-2.5 rounded-lg text-sm font-semibold"
+              >
                 Book Pickup
               </a>
               <a

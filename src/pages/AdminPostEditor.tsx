@@ -43,6 +43,7 @@ const AdminPostEditor = () => {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [contentUploading, setContentUploading] = useState(false);
+  const [slugTouched, setSlugTouched] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contentImageRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
@@ -52,8 +53,9 @@ const AdminPostEditor = () => {
     image: "",
     excerpt: "",
     content: "",
-    author: localStorage.getItem("admin_email") || "Admin",
+    author: "Admin",
     status: "draft",
+    publish_date: "",
     featured_homepage: false,
     seo_title: "",
     seo_description: "",
@@ -79,6 +81,7 @@ const AdminPostEditor = () => {
             content: post.content,
             author: post.author,
             status: post.status || "draft",
+            publish_date: post.publish_date || "",
             featured_homepage: !!post.featured_homepage,
             seo_title: post.seo_title || "",
             seo_description: post.seo_description || "",
@@ -97,7 +100,19 @@ const AdminPostEditor = () => {
     setForm((prev) => ({
       ...prev,
       title,
-      slug: isEdit ? prev.slug : generateSlug(title),
+      slug: isEdit
+        ? prev.slug
+        : (!slugTouched && (!prev.slug || prev.slug === generateSlug(prev.title)))
+          ? generateSlug(title)
+          : prev.slug,
+    }));
+  };
+  const todayISO = () => new Date().toISOString().slice(0, 10);
+  const handleStatusChange = (status: string) => {
+    setForm((f) => ({
+      ...f,
+      status,
+      publish_date: status === "published" && !f.publish_date ? todayISO() : f.publish_date,
     }));
   };
 
@@ -129,7 +144,7 @@ const AdminPostEditor = () => {
         body: fd,
       });
       const data = await res.json();
-      imageUrl = `${API_BASE}${data.url}`;
+      imageUrl = resolveImageUrl(data.url) || "";
     } catch (err) {
       console.error(err);
       setContentUploading(false);
@@ -155,9 +170,8 @@ const AdminPostEditor = () => {
         body: fd,
       });
       const data = await res.json();
-      // Store full URL
-      const fullUrl = `${API_BASE}${data.url}`;
-      setForm((f) => ({ ...f, image: fullUrl }));
+      const fullUrl = resolveImageUrl(data.url);
+      if (fullUrl) setForm((f) => ({ ...f, image: fullUrl }));
     } catch (err) {
       console.error("Upload failed", err);
       toast({ title: "Upload failed", description: "Could not upload image.", variant: "destructive" });
@@ -167,12 +181,11 @@ const AdminPostEditor = () => {
 
   const handleSave = async () => {
     const currentContent = editorRef.current?.innerHTML || form.content;
-    const payload = { ...form, content: currentContent };
-
-    // Auto-set publish_date if changing to published
-    if (payload.status === "published") {
-      // The backend handles publish_date auto-set, but we include it for clarity
-    }
+    const payload = {
+      ...form,
+      content: currentContent,
+      publish_date: form.status === "published" && !form.publish_date ? todayISO() : form.publish_date,
+    };
 
     setSaving(true);
     try {
@@ -187,7 +200,7 @@ const AdminPostEditor = () => {
       });
       if (res.ok) {
         toast({ title: isEdit ? "Post updated" : "Post created", description: `"${form.title}" has been ${isEdit ? "updated" : "created"} successfully.` });
-        navigate("/admin/dashboard");
+        navigate("/admin/dashboard", { replace: true });
       } else {
         const data = await res.json().catch(() => ({}));
         toast({ title: "Error", description: data.message || "Failed to save post.", variant: "destructive" });
@@ -241,7 +254,10 @@ const AdminPostEditor = () => {
                 <input
                   type="text"
                   value={form.slug}
-                  onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
+                  onChange={(e) => {
+                    setSlugTouched(true);
+                    setForm((f) => ({ ...f, slug: e.target.value }));
+                  }}
                   className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   placeholder="post-url-slug"
                 />
@@ -276,7 +292,7 @@ const AdminPostEditor = () => {
                 </div>
                 {form.image && (
                   <img
-                    src={resolveImageUrl(form.image)}
+                    src={resolveImageUrl(form.image) || "/placeholder.svg"}
                     alt="Preview"
                     className="mt-2 h-32 rounded-lg object-cover"
                     onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder.svg"; }}
@@ -365,13 +381,26 @@ const AdminPostEditor = () => {
                   <label className="block text-sm font-medium text-foreground mb-1.5">Status</label>
                   <select
                     value={form.status}
-                    onChange={(e) => setForm((f) => ({ ...f, status: e.target.value }))}
+                    onChange={(e) => handleStatusChange(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     <option value="draft">Draft</option>
                     <option value="published">Published</option>
                   </select>
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">Publish Date</label>
+                <input
+                  type="date"
+                  value={form.publish_date}
+                  onChange={(e) => setForm((f) => ({ ...f, publish_date: e.target.value }))}
+                  className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Setting status to Published will auto-fill today if empty.
+                </p>
               </div>
 
               {/* Featured on Homepage */}

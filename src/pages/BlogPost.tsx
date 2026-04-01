@@ -73,9 +73,10 @@ const BlogPost = () => {
       {/* Hero image */}
       <div className="pt-24 container mx-auto px-4 max-w-3xl">
         <img
-          src={resolveImageUrl(post.image)}
+          src={resolveImageUrl(post.image) || "/placeholder.svg"}
           alt={post.title}
           className="w-full rounded-2xl object-cover max-h-[420px]"
+          onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder.svg"; }}
         />
       </div>
 

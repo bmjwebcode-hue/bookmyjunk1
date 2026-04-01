@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 160 20% 10%;
 
-    --primary: 152 60% 36%;
+    --primary: 163 100% 37%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 45 80% 55%;
@@ -24,23 +24,23 @@
     --muted: 150 10% 93%;
     --muted-foreground: 160 10% 45%;
 
-    --accent: 152 40% 92%;
-    --accent-foreground: 152 60% 26%;
+    --accent: 163 40% 92%;
+    --accent-foreground: 163 60% 26%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 150 15% 88%;
     --input: 150 15% 88%;
-    --ring: 152 60% 36%;
+    --ring: 163 100% 37%;
 
     --radius: 0.75rem;
 
-    --hero-gradient: linear-gradient(135deg, hsl(152 60% 36%), hsl(160 50% 28%));
-    --hero-gradient-overlay: linear-gradient(180deg, hsla(152, 60%, 6%, 0.88) 0%, hsla(152, 40%, 12%, 0.72) 100%);
-    --card-shadow: 0 1px 3px hsla(152, 40%, 20%, 0.06), 0 4px 24px -4px hsla(152, 40%, 20%, 0.08);
-    --card-shadow-hover: 0 8px 40px -8px hsla(152, 40%, 20%, 0.16), 0 2px 8px hsla(152, 40%, 20%, 0.06);
-    --premium-glow: 0 0 60px -12px hsla(152, 60%, 36%, 0.15);
+    --hero-gradient: linear-gradient(135deg, hsl(163 100% 37%), hsl(163 100% 30%));
+    --hero-gradient-overlay: linear-gradient(180deg, hsla(163, 100%, 8%, 0.88) 0%, hsla(163, 100%, 12%, 0.72) 100%);
+    --card-shadow: 0 1px 3px hsla(163, 100%, 20%, 0.06), 0 4px 24px -4px hsla(163, 100%, 20%, 0.08);
+    --card-shadow-hover: 0 8px 40px -8px hsla(163, 40%, 20%, 0.16), 0 2px 8px hsla(163, 40%, 20%, 0.06);
+    --premium-glow: 0 0 60px -12px hsla(163, 100%, 37%, 0.15);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -59,19 +59,19 @@
     --card-foreground: 150 10% 95%;
     --popover: 160 15% 12%;
     --popover-foreground: 150 10% 95%;
-    --primary: 152 55% 45%;
+    --primary: 163 100% 37%;
     --primary-foreground: 0 0% 100%;
     --secondary: 45 70% 50%;
     --secondary-foreground: 0 0% 100%;
     --muted: 160 10% 18%;
     --muted-foreground: 150 10% 60%;
-    --accent: 152 30% 20%;
-    --accent-foreground: 152 50% 70%;
+    --accent: 163 30% 20%;
+    --accent-foreground: 163 50% 70%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
     --border: 160 10% 20%;
     --input: 160 10% 20%;
-    --ring: 152 55% 45%;
+    --ring: 163 55% 45%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

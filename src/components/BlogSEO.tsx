@@ -90,7 +90,7 @@ const BlogSEO = ({ post }: BlogSEOProps) => {
 
     // Cleanup on unmount
     return () => {
-      document.title = "Book My Junk — E-Waste Recycling";
+      document.title = "Book My Junk — E-waste Recycling";
       const jsonLd = document.getElementById(jsonLdId);
       if (jsonLd) jsonLd.remove();
     };

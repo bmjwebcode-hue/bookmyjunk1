@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Carousel,
@@ -23,8 +23,8 @@ import BMJ_8 from "@/assets/electronic-scrap-recycling-service.webp";
 import BMJ_9 from "@/assets/electronic-waste-pickup-service.webp";
 
 const galleryImages = [
-  { src: BMJ_1, alt: "Best E-waste Recycler", caption: "Community E-Waste Collection Team" },
-  { src: BMJ_2, alt: "E-waste Management", caption: "Certified E-Waste Collection" },
+  { src: BMJ_1, alt: "Best E-waste Recycler", caption: "Community E-waste Collection Team" },
+  { src: BMJ_2, alt: "E-waste Management", caption: "Certified E-waste Collection" },
   { src: BMJ_3, alt: "Electronic waste collection drive", caption: "Collection Drive" },
   { src: BMJ_4, alt: "E-waste collection van", caption: "Our Fleet Ready for Pickup" },
   { src: BMJ_5, alt: "E-waste Awareness Drive in schools", caption: "Awareness Drive in schools" },
@@ -35,7 +35,40 @@ const galleryImages = [
 ];
 
 const GallerySection = () => {
-  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
+  type DisplayImage = { src: string; alt: string; caption: string };
+  const [cmsGallery, setCmsGallery] = useState<Array<{ image_url: string; alt_text?: string; caption?: string }>>([]);
+  const imagesToShow: DisplayImage[] = useMemo(() => {
+    if (Array.isArray(cmsGallery) && cmsGallery.length > 0) {
+      return cmsGallery
+        .filter((x) => typeof x?.image_url === "string" && x.image_url.trim() !== "")
+        .map((x) => ({
+          src: x.image_url,
+          alt: (x.alt_text || "").trim() || "Gallery image",
+          caption: (x.caption || "").trim(),
+        }));
+    }
+    return galleryImages;
+  }, [cmsGallery]);
+
+  const [selectedImage, setSelectedImage] = useState<DisplayImage | null>(null);
+
+  useEffect(() => {
+    const base = import.meta.env.VITE_API_URL;
+    if (!base) return;
+    const load = async () => {
+      try {
+        const res = await fetch(`${base}/api/cms/gallery`, { method: "GET" });
+        if (!res.ok) return;
+        const data = (await res.json()) as unknown;
+        if (Array.isArray(data) && data.length > 0) {
+          setCmsGallery(data as any);
+        }
+      } catch {
+        // ignore; fallback to static
+      }
+    };
+    void load();
+  }, []);
 
   return (
     <section id="gallery" className="py-20 bg-muted/30">
@@ -70,7 +103,7 @@ const GallerySection = () => {
             className="w-full"
           >
             <CarouselContent className="-ml-4">
-              {galleryImages.map((img, i) => (
+              {imagesToShow.map((img, i) => (
                 <CarouselItem
                   key={i}
                   className="pl-4 basis-full sm:basis-1/2 md:basis-1/3"
